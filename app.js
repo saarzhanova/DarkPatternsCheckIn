@@ -1,63 +1,121 @@
-const videoSection = document.getElementById('videoSection');
-const loadingMessage = document.getElementById('loadingMessage');
-const randomButton = document.getElementById('randomButton');
+const selectedSeat = document.getElementById('selectedSeat');
+const allSeats = document.querySelectorAll('.seat');
+const nextButton = document.getElementById('nextButton');
+const expensiveSeatNumbers = [1,2,3,4,5,6,7,8,9,22,23,24,25,26,27];
+const budgetSeatNumbers = [10,12,13,15,16,18,19,21,28,30,31,33,34,36,37,39,40,42,43,45];
+const expensiveSeatPrice = 300;
+const budgetSeatPrice = 50;
+let seatPrice = 0;
+let totalPrice = 0;
 
-const apiKey = 'AIzaSyA70eaZK2Ds326pSPYYG4TsxXy0CIyeZuo';
-const playlistId = 'UUlODDXeUIz1-FaKyN8dsNrA';
-const maxResults = 50;
-let nextPageToken = null;
-let i = 1;
+const allBaggage = document.querySelectorAll('.baggage');
 
-let allVideos = [];
-let shownVideos = new Set();
-async function fetchVideos(pageToken = '') {
-    const url = `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${playlistId}&key=${apiKey}&pageToken=${pageToken}`;
+const total = document.getElementById('total');
 
-    try {
-        const res = await fetch(url);
-        const data = await res.json();
-        let videos = data.items
+function selectSeats() {
+    allSeats.forEach(seat => {
+        seat.addEventListener('click', function () {
+            const selectedSrc = 'src/images/selectedSeat.png';
+            const defaultSrc = 'src/images/defaultSeat.png';
+            let isSeatSelected = this.classList.contains('selected');
 
-        if (videos) {
-            allVideos.push(...videos);
-        }
+            if (isSeatSelected) {
+                this.classList.remove('selected');
+                this.src = defaultSrc;
+                selectedSeat.innerHTML = "<span class='text-secondary text-opacity-50 h6'>No seet is selected</span>";
+                disableNextButton();
+                seatPrice = 0
+            } else {
+                let seatNumber = this.id;
+                allSeats.forEach(s => {
+                    s.classList.remove('selected');
+                    s.src = defaultSrc;
+                    seatPrice = 0
+                });
+                enableNextButton();
+                selectedSeat.innerText = this.id;
+                this.classList.add('selected');
+                this.src = selectedSrc;
+                countSeatPrice(seatNumber);
+            }
+        });
+    });
+}
+function disableNextButton() {
+    nextButton.innerHTML = '<img src="src/images/nextButtonDisabled.png" class="nextButton" style="position: relative; bottom: -120px;">';
+    nextButton.style.pointerEvents = "none";
+}
+function enableNextButton() {
+    nextButton.innerHTML = '<img src="src/images/nextButton.png" class="nextButton" style="position: relative; bottom: -120px;">';
+    nextButton.style.pointerEvents = "auto";
+}
+function countSeatPrice(seatNumber) {
+    if (expensiveSeatNumbers.includes(Number(seatNumber))) {
+        seatPrice = expensiveSeatPrice
+    } else if (budgetSeatNumbers.includes(Number(seatNumber))) {
+        seatPrice = budgetSeatPrice
+    } else {
+        seatPrice = 0
+    }
+    localStorage.setItem('seat', seatPrice);
+}
+function countTotalPrice() {
+    totalPrice += seatPrice
+    console.log(totalPrice)
+}
 
-        let isNextPageExists = data.nextPageToken
-        if (isNextPageExists) {
-            fetchVideos(data.nextPageToken);
-        } else {
-            loadingMessage.style.display = 'none';
-            randomButton.disabled = false;
-            console.log(`Loaded video number: ${allVideos.length}`);
-        }
-    } catch (err) {
-        console.error(err);
-        videoSection.innerHTML = `<h3>Error: ${err.message}</h3>`;
+function selectBaggage() {
+    allBaggage.forEach(baggage => {
+        baggage.addEventListener('click', function () {
+            let selectedBagSrc = "";
+            let disabledBagSrc = "";
+            switch (this.id) {
+                case "small":
+                    selectedBagSrc = 'src/images/baggageSmall.png';
+                    disabledBagSrc = 'src/images/baggageSmallDisabled.png';
+                    break;
+                case "middle":
+                    selectedBagSrc = 'src/images/baggageMiddle.png';
+                    disabledBagSrc = 'src/images/baggageMiddleDisabled.png';
+                    break;
+                case "large":
+                    selectedBagSrc = 'src/images/baggageLarge.png';
+                    disabledBagSrc = 'src/images/baggageLargeDisabled.png';
+                    break;
+                default:
+                    console.log('Unknown id in baggages')
+            }
+
+            let isBaggageSelected = this.classList.contains('selected');
+
+            if (isBaggageSelected) {
+                this.classList.remove('selected');
+                this.src = disabledBagSrc;
+                // seatPrice = 0
+            } else {
+                let baggageNumber = this.id;
+                this.classList.add('selected');
+                this.src = selectedBagSrc;
+                // countSeatPrice(seatNumber);
+            }
+        });
+    });
+}
+
+console.log('totalPrice', totalPrice)
+console.log('seatPrice', seatPrice)
+if (total) {
+    const seatPrice = localStorage.getItem('seat');
+    totalPrice += Number(seatPrice);
+    if (totalPrice > 0) {
+        console.log('trying')
+        total.innerText = totalPrice + "€";
+    } else {
+        total.innerHTML = "<span class='h6 text-secondary'>Error: No Price</span>"
     }
 }
 
-function getRandomVideo() {
-    if (shownVideos.size === allVideos.length) {
-        randomButton.disabled = true;
-        videoSection.innerHTML = "<h3>All videos were shown!</h3>";
-        return;
-    }
+selectSeats();
+selectBaggage();
 
-    let randomIndex;
-    do {
-        randomIndex = Math.floor(Math.random() * allVideos.length);
-    } while (shownVideos.has(randomIndex));
 
-    shownVideos.add(randomIndex);
-    const videoId = allVideos[randomIndex].snippet.resourceId.videoId;
-
-    videoSection.innerHTML = `
-            <iframe width="560" height="315"
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0&disablekb=1&iv_load_policy=3&playsinline=1" 
-                frameborder="0" allow="autoplay" allowfullscreen>
-            </iframe>`;
-}
-
-randomButton.addEventListener('click', getRandomVideo);
-
-fetchVideos();

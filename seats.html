@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Seat Selection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .seat {
+            width: 50px;
+            position: absolute;
+            cursor: pointer;
+        }
+        .seat:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: box-shadow 0.3s ease;
+        }
+        .seat:active {
+
+        }
+        .nextButton {
+            width: 120px;
+        }
+    </style>
+</head>
+<body class="bg-body-tertiary">
+
+<div class="text-center my-xxl-5">
+    <h1>Check-in</h1>
+</div>
+<div class="d-flex justify-content-center align-items-center my-xxl-5 pt-5">
+    <div style="position: relative; width: fit-content;">
+        <img src="src/images/plane.png" class="img-fluid w-50 mb-5">
+
+        <!-- Row 1: Only columns 1-3 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="1" style="top: 334px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="2" style="top: 334px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="3" style="top: 334px; left: 124px">
+
+        <!-- Row 2 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="4" style="top: 387px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="5" style="top: 387px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="6" style="top: 387px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="7" style="top: 387px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="8" style="top: 387px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="9" style="top: 387px; left: 313px">
+
+        <!-- Row 3 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="10" style="top: 440px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="11" style="top: 440px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="12" style="top: 440px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="13" style="top: 441px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="14" style="top: 441px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="15" style="top: 441px; left: 313px">
+
+        <!-- Row 4 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="16" style="top: 493px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="17" style="top: 493px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="18" style="top: 493px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="19" style="top: 494px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="20" style="top: 494px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="21" style="top: 494px; left: 313px">
+
+        <!-- Row 5 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="22" style="top: 616px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="23" style="top: 616px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="24" style="top: 616px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="25" style="top: 616px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="26" style="top: 616px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="27" style="top: 616px; left: 313px">
+
+        <!-- Row 6 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="28" style="top: 669px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="29" style="top: 669px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="30" style="top: 669px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="31" style="top: 669px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="32" style="top: 669px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="33" style="top: 669px; left: 313px">
+
+        <!-- Row 7 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="34" style="top: 722px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="35" style="top: 722px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="36" style="top: 722px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="37" style="top: 722px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="38" style="top: 722px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="39" style="top: 722px; left: 313px">
+
+        <!-- Row 8 -->
+        <img src="src/images/defaultSeat.png" class="seat" id="40" style="top: 775px; left: 14px">
+        <img src="src/images/defaultSeat.png" class="seat" id="41" style="top: 775px; left: 69px">
+        <img src="src/images/defaultSeat.png" class="seat" id="42" style="top: 775px; left: 124px">
+        <img src="src/images/defaultSeat.png" class="seat" id="43" style="top: 775px; left: 203px">
+        <img src="src/images/defaultSeat.png" class="seat" id="44" style="top: 775px; left: 258px">
+        <img src="src/images/defaultSeat.png" class="seat" id="45" style="top: 775px; left: 313px">
+    </div>
+</div>
+<img src="src/images/infoWindow.png" class="position-fixed img-fluid w-25" style="top: 100px; left: 750px">
+<div class="mt-3 text-center" style="position: fixed; top: 100px; left: 750px; width: 300px; height: 330px;">
+    <div style="height: 50px;">
+        <h2 class="">Select a seat</h2>
+    </div>
+    <div class="d-flex justify-content-center align-items-center text-center" style="height: 200px;">
+        <h1 id="selectedSeat"><span class='text-secondary text-opacity-50 h6'>No seet is selected</span></h1>
+    </div>
+    <div class="position-absolute bottom-0 start-0 d-flex justify-content-center">
+        <p class="ms-5 me-4">
+            <img src="src/images/defaultSeat.png" style="width: 20px;">
+            <span> - available </span>
+        </p>
+        <p>
+            <img src="src/images/selectedSeat.png" style="width: 20px;">
+            <span> - selected </span>
+        </p>
+    </div>
+    <a id="nextButton" style="pointer-events: none" href="baggage.html"><img src="src/images/nextButtonDisabled.png" class="nextButton" style="position: relative; bottom: -120px;"></a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+</body>
+</html>
