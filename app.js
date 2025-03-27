@@ -3,12 +3,21 @@ const allSeats = document.querySelectorAll('.seat');
 const nextButton = document.getElementById('nextButton');
 const expensiveSeatNumbers = [1,2,3,4,5,6,7,8,9,22,23,24,25,26,27];
 const budgetSeatNumbers = [10,12,13,15,16,18,19,21,28,30,31,33,34,36,37,39,40,42,43,45];
-const expensiveSeatPrice = 300;
-const budgetSeatPrice = 50;
+const expensiveSeatPrice = 299;
+const budgetSeatPrice = 49;
 let seatPrice = 0;
 let totalPrice = 0;
 
 const allBaggage = document.querySelectorAll('.baggage');
+let baggagePrice = 0;
+const largeBaggagePrice = 299
+const middleBaggagePrice = 199
+const smallBaggagePrice = 9
+let isLarge = true;
+let isMiddle = true;
+let isSmall = true;
+const nextButtonBaggage = document.getElementById('nextButtonBaggage')
+const payButton = document.getElementById('pay')
 
 const total = document.getElementById('total');
 
@@ -73,14 +82,17 @@ function selectBaggage() {
                 case "small":
                     selectedBagSrc = 'src/images/baggageSmall.png';
                     disabledBagSrc = 'src/images/baggageSmallDisabled.png';
+                    isSmall = !isSmall;
                     break;
                 case "middle":
                     selectedBagSrc = 'src/images/baggageMiddle.png';
                     disabledBagSrc = 'src/images/baggageMiddleDisabled.png';
+                    isMiddle = !isMiddle;
                     break;
                 case "large":
                     selectedBagSrc = 'src/images/baggageLarge.png';
                     disabledBagSrc = 'src/images/baggageLargeDisabled.png';
+                    isLarge = !isLarge;
                     break;
                 default:
                     console.log('Unknown id in baggages')
@@ -91,7 +103,6 @@ function selectBaggage() {
             if (isBaggageSelected) {
                 this.classList.remove('selected');
                 this.src = disabledBagSrc;
-                // seatPrice = 0
             } else {
                 let baggageNumber = this.id;
                 this.classList.add('selected');
@@ -102,16 +113,29 @@ function selectBaggage() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const nextButtonBaggage = document.getElementById('nextButtonBaggage');
+    nextButtonBaggage.addEventListener('click', function () {
+        const baggagePrice = (isSmall ? smallBaggagePrice : 0) + (isMiddle ? middleBaggagePrice : 0) + (isLarge ? largeBaggagePrice : 0);
+        localStorage.setItem('baggage', baggagePrice);
+    }); })
+
+
 console.log('totalPrice', totalPrice)
 console.log('seatPrice', seatPrice)
 if (total) {
-    const seatPrice = localStorage.getItem('seat');
-    totalPrice += Number(seatPrice);
+    const seatPrice = Number(localStorage.getItem('seat'));
+    const baggagePrice = Number(localStorage.getItem('baggage'));
+    console.log('baggagePrice', baggagePrice)
+    console.log('seatPrice', seatPrice)
+
+    totalPrice += seatPrice;
+    totalPrice += baggagePrice;
     if (totalPrice > 0) {
         console.log('trying')
         total.innerText = totalPrice + "€";
     } else {
-        total.innerHTML = "<span class='h6 text-secondary'>Error: No Price</span>"
+        total.innerHTML = "<span class='h6 text-secondary'>Congradulations! You don't need to pay</span>"
     }
 }
 
