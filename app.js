@@ -139,6 +139,20 @@ if (total) {
     }
 }
 
+function updateInfoWindowPosition() {
+    const plane = document.getElementById('plane');
+    const infoWindow = document.getElementById('infoWindow');
+    const planeRect = plane.getBoundingClientRect();
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+    // 20px right of the plane
+    infoWindow.style.left = (planeRect.right + scrollLeft + 100) + 'px';
+}
+
+window.addEventListener('load', updateInfoWindowPosition);
+window.addEventListener('resize', updateInfoWindowPosition);
+window.addEventListener('scroll', updateInfoWindowPosition);
+
 selectSeats();
 selectBaggage();
 
